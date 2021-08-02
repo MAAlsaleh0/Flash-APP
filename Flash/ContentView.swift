@@ -4,7 +4,6 @@
 //
 //  Created by Mohammed Alsaleh on 23/12/1442 AH.
 //
-
 import SwiftUI
 import AVFoundation
 
@@ -14,31 +13,29 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             Color(#colorLiteral(red: 0.1254901961, green: 0.1215686275, blue: 0.1254901961, alpha: 1)).edgesIgnoringSafeArea(.all)
-            VStack {
-                
-//                Toggle("", isOn: $ISON).toggleStyle(TogleStyle())
-                VStack{
-                    RoundedRectangle(cornerRadius: 50)
-                        
-        //                .stroke(Color.white, lineWidth: 2)
-                        .foregroundColor(Color(#colorLiteral(red: 0.1254901961, green: 0.1215686275, blue: 0.1254901961, alpha: 1)))
-                        
-                        .frame(width: 120, height: 250)
-                        .overlay(RoundedRectangle(cornerRadius: 50)
-                                    .foregroundColor(ISON ? .green : .red).frame(width: 120, height: 150),alignment: ISON ? .bottom : .top)
-                        .overlay(Text(ISON ? "is ON" : "is OFF")
-                                 .bold().foregroundColor(ISON ? .green : .red).frame(width: 120, height: 150),alignment: ISON ? .top : .bottom)
-                        .animation(.easeIn)
-                        .background(RoundedRectangle(cornerRadius: 50).shadow(radius: 15))
-                }.onTapGesture {
-                    ISON.toggle()
-                    onn.toggle()
-                    toggleFlash()
+            
+            VStack{
+                RoundedRectangle(cornerRadius: 50)
                     
-                }.frame(width: 200, height: 290).cornerRadius(50)
-            }
+                    //                .stroke(Color.white, lineWidth: 2)
+                    .foregroundColor(Color(#colorLiteral(red: 0.1254901961, green: 0.1215686275, blue: 0.1254901961, alpha: 1)))
+                    
+                    .frame(width: 120, height: 250)
+                    .overlay(RoundedRectangle(cornerRadius: 50)
+                                .foregroundColor(ISON ? .green : .red).frame(width: 120, height: 150),alignment: ISON ? .bottom : .top)
+                    .overlay(Text(ISON ? "is ON" : "is OFF")
+                                .bold().foregroundColor(ISON ? .green : .red).frame(width: 120, height: 150),alignment: ISON ? .top : .bottom)
+                    .animation(.easeIn)
+                    .background(RoundedRectangle(cornerRadius: 50).shadow(radius: 15))
+            }.onTapGesture {
+                ISON.toggle()
+                onn.toggle()
+                toggleFlash()
+                
+            }.frame(width: 200, height: 290).cornerRadius(50)
         }.preferredColorScheme(.light)
     }
+    
     func toggleFlash() {
         guard let device = AVCaptureDevice.default(for: .video), device.hasTorch else { return }
         
@@ -62,24 +59,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView().previewDevice("iPhone 12 Pro")
     }
 }
-struct TogleStyle : ToggleStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        VStack{
-            RoundedRectangle(cornerRadius: 50)
-                
-//                .stroke(Color.white, lineWidth: 2)
-                .foregroundColor(Color(#colorLiteral(red: 0.1254901961, green: 0.1215686275, blue: 0.1254901961, alpha: 1)))
-                
-                .frame(width: 120, height: 250)
-                .overlay(RoundedRectangle(cornerRadius: 50)
-                            .foregroundColor(configuration.isOn ? .green : .red).frame(width: 120, height: 150),alignment: configuration.isOn ? .bottom : .top)
-                .overlay(Text(configuration.isOn ? "is ON" : "is OFF")
-                         .bold().foregroundColor(configuration.isOn ? .green : .red).frame(width: 120, height: 150),alignment: configuration.isOn ? .top : .bottom)
-                .animation(.easeIn)
-                .background(RoundedRectangle(cornerRadius: 50).shadow(radius: 15))
-        }.onTapGesture {
-            configuration.isOn.toggle()
-            
-        }.frame(width: 200, height: 290).cornerRadius(50)
-    }
-}
+
